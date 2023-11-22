@@ -14,12 +14,6 @@ const lorem = new LoremIpsum({
     }
 });
 
-let data = qs.stringify({
-    'PARS.DUMMY.MENSYS.1': '',
-    'MUA_CODE.DUMMY.MENSYS.1': 'QA TEST',
-    'PASSWORD.DUMMY.MENSYS.1': lorem.generateParagraphs(1),
-    'BP101.DUMMY_B.MENSYS': 'Log In'
-});
 
 const filePath = 'example.txt';
 let counter = 0;
@@ -43,10 +37,22 @@ let config = {
     headers: {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
     },
-    data: data
+    data: qs.stringify({
+        'PARS.DUMMY.MENSYS.1': '',
+        'MUA_CODE.DUMMY.MENSYS.1': 'QA TEST',
+        'PASSWORD.DUMMY.MENSYS.1': lorem.generateParagraphs(1000),
+        'BP101.DUMMY_B.MENSYS': 'Log In'
+    })
 };
 
 setInterval(() => {
-    writeToFile()
+    axios.request(config)
+        .then((response) => {
+            console.count(response.status);
+            writeToFile()
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 
 }, 50);
