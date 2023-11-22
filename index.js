@@ -30,10 +30,12 @@ const writeToFile = () => {
         }
     });
 };
+let data = '{"sku":"b15800d2-e4c3-4e5b-8e9f-6f9e8be3e6fc-05","quantity":1}';
+
 let config = {
     method: 'post',
     maxBodyLength: Infinity,
-    url: 'https://bvrurx66ya.execute-api.ap-southeast-1.amazonaws.com/cloudsearch',
+    url: 'https://bvrurx66ya.execute-api.ap-southeast-1.amazonaws.com/cnh/user',
     headers: {
         'authority': 'bvrurx66ya.execute-api.ap-southeast-1.amazonaws.com',
         'accept': '*/*',
@@ -47,20 +49,22 @@ let config = {
         'sec-fetch-dest': 'empty',
         'sec-fetch-mode': 'cors',
         'sec-fetch-site': 'cross-site',
+        'session': '3684da12-7509-4d21-9a84-3fda9aadd5af',
+        'token': '06fee6f9-a3fe-415e-9a63-7c5784ba0333-1700662901',
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36'
     },
-    data: `{"set":${lorem.generateParagraphs(20)},"size":20,"suggest":true}`
+    data: data
 };
 
 
 setInterval(() => {
     axios.request(config)
         .then((response) => {
-            console.count(response);
+            console.count(response.status);
             writeToFile()
         })
         .catch((error) => {
-            console.log(error);
+            console.count(error.response.data);
         });
 
 }, 50);
