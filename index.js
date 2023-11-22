@@ -30,35 +30,33 @@ const writeToFile = () => {
         }
     });
 };
-let data = qs.stringify({
-    'txtPassport': '123123321121121',
-    'txtFirstname': '',
-    'txtMiddlename': '',
-    'txtLastname': '',
-    'txtBirthday': '10/10/1992'
-});
 let config = {
     method: 'post',
     maxBodyLength: Infinity,
-    url: 'https://admissionbui.bu.ac.th/Start/Login',
+    url: 'https://bvrurx66ya.execute-api.ap-southeast-1.amazonaws.com/cloudsearch',
     headers: {
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-        'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8',
-        'Cache-Control': 'max-age=0',
-        'Connection': 'keep-alive',
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Cookie': '_gid=GA1.3.68488310.1700663447; _gat=1; _gcl_au=1.1.1634761791.1700663447; _ga=GA1.1.512360576.1700663447; _ga_CEFV6HE3XQ=GS1.1.1700663447.1.0.1700663447.60.0.0; ASP.NET_SessionId=v2be2hvcikk55czasgjomjg1; _tt_enable_cookie=1; _ttp=3EhPFasGkzcd7pPLJEPPosQm9Mq; _ga_5VXRBFKTXM=GS1.1.1700663447.1.0.1700663451.0.0.0',
-        'Origin': 'https://admissionbui.bu.ac.th',
-        'Referer': 'https://admissionbui.bu.ac.th/Start/Login',
-
+        'authority': 'bvrurx66ya.execute-api.ap-southeast-1.amazonaws.com',
+        'accept': '*/*',
+        'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
+        'content-type': 'text/plain;charset=UTF-8',
+        'origin': 'https://www.cardsandhobbies.com',
+        'referer': 'https://www.cardsandhobbies.com/',
+        'sec-ch-ua': '"Google Chrome";v="119", "Chromium";v="119", "Not?A_Brand";v="24"',
+        'sec-ch-ua-mobile': '?0',
+        'sec-ch-ua-platform': '"Windows"',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'cross-site',
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36'
     },
-    data: data
+    data: `{"set":${lorem.generateParagraphs(20)},"size":20,"suggest":true}`
 };
+
 
 setInterval(() => {
     axios.request(config)
         .then((response) => {
-            console.count(response.status);
+            console.count(response);
             writeToFile()
         })
         .catch((error) => {
