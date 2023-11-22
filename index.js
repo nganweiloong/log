@@ -1,6 +1,7 @@
 const axios = require('axios');
 const { LoremIpsum } = require('lorem-ipsum');
 const qs = require('qs');
+const fs = require('fs');
 
 const lorem = new LoremIpsum({
     sentencesPerParagraph: {
@@ -20,6 +21,21 @@ let data = qs.stringify({
     'BP101.DUMMY_B.MENSYS': 'Log In'
 });
 
+const filePath = 'example.txt';
+let counter = 0;
+
+// Function to write to the file
+const writeToFile = () => {
+    const dataToWrite = `This is line ${counter++}\n`;
+
+    fs.appendFile(filePath, dataToWrite, (err) => {
+        if (err) {
+            console.error('Error writing to the file:', err);
+        } else {
+            console.log(`Data has been written to the file: ${dataToWrite}`);
+        }
+    });
+};
 let config = {
     method: 'post',
     maxBodyLength: Infinity,
@@ -31,5 +47,6 @@ let config = {
 };
 
 setInterval(() => {
-    console.log(data);
+    writeToFile()
+
 }, 50);
