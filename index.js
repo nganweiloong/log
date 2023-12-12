@@ -45,7 +45,7 @@ let config = (u) => ({
         'password': 'QA TEST',
         'domain': '@um.edu.my',
         '_eventId': 'submit',
-        'username': 'qwerewrwe@um.edu.my'
+        'username': 'QATESTING@um.edu.my'
     })
 })
 
